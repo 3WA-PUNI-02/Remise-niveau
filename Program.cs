@@ -1,5 +1,6 @@
 ﻿
-Calculator2000();
+Loto();
+
 
 
 
@@ -18,7 +19,6 @@ void TVA()
     //Console.WriteLine($"Prix TTC : {ttc.ToString("F2")} euros");
     Console.ReadKey();
 }
-
 // ========== ========== ========== ========== ==========
 void Formulaire()
 {
@@ -31,7 +31,6 @@ void Formulaire()
 
     Console.WriteLine($"Tu es {prenom} {nom} et tu as {age} ans !");
 }
-
 // ========== ========== ========== ========== ==========
 void ChiFouMi()
 {
@@ -41,7 +40,7 @@ void ChiFouMi()
     Console.WriteLine("2 - Feuille");
     Console.WriteLine("3 - Ciseaux");
 
-    int randomChoice = new Random().Next(1, 3);
+    int randomChoice = new Random().Next(1, 4);
     Console.WriteLine($"({randomChoice} sera mon choix)");
 
     string reponse = Console.ReadLine();
@@ -73,7 +72,6 @@ void ChiFouMi()
 
     Console.ReadKey();
 }
-
 // ========== ========== ========== ========== ==========
 void Calculator2000()
 {
@@ -82,8 +80,9 @@ void Calculator2000()
     int a = 0;
     int b = 0;
 
-    int choice = 0;
-    while(choice != 1 || choice == 2)
+    int choice = 1;
+
+    while(choice != 1 && choice != 2)
     {
         Console.WriteLine("Menu");
         Console.WriteLine("1 Facile");
@@ -100,6 +99,14 @@ void Calculator2000()
             b = new Random().Next(1, 10000);
         }
     }
+
+    do
+    {
+
+        Console.WriteLine("");
+
+    } while(choice == 1);
+
 
     #region Game
     Console.WriteLine($"Combien fait {a} + {b} ?");
@@ -119,3 +126,82 @@ void Calculator2000()
 
 
 }
+// ========== ========== ========== ========== ==========
+void PlusOuMoins()
+{
+    var nbMystere = new Random().Next(1, 100);
+    int choixJoueur = 0;
+    Console.WriteLine($"Plus ou moins (cheat:{nbMystere}");
+
+    do
+    {
+        Console.WriteLine("Devine :");
+        choixJoueur = int.Parse(Console.ReadLine());
+
+        if(choixJoueur < nbMystere)
+        {
+            Console.WriteLine("C'est plus");
+        }
+        else if(choixJoueur > nbMystere)
+        {
+            Console.WriteLine("C'est moins");
+        }
+
+    } while (choixJoueur != nbMystere);
+
+    Console.WriteLine("GG");
+    Console.ReadKey();
+}
+// ========== ========== ========== ========== ==========
+void PlusOuMoinsV2()
+{
+    var nbMystere = new Random().Next(1, 100);
+    int choixJoueur = 0;
+    int nbTentative = 0;
+
+    DateTime old = DateTime.Now;
+    Console.WriteLine($"Plus ou moins (cheat:{nbMystere})");
+    do
+    {
+        nbTentative++;
+        Console.WriteLine("Devine :");
+        if(int.TryParse(Console.ReadLine(), out choixJoueur))
+        {
+            if (choixJoueur < nbMystere)
+            {
+                Console.WriteLine("C'est plus");
+            }
+            else if (choixJoueur > nbMystere)
+            {
+                Console.WriteLine("C'est moins");
+            }
+        }
+        else
+        {
+            Console.WriteLine("écrit un nombre stp");
+        }
+    } while (choixJoueur != nbMystere);
+
+
+    DateTime now = DateTime.Now;
+    var elapsed = (now - old).TotalSeconds;
+    Console.WriteLine($"GG tu as réussis en {nbTentative} fois et en {elapsed.ToString("F2")} secondes chrono!");
+    Console.ReadKey();
+}
+// ========== ========== ========== ========== ==========
+void Loto()
+{
+    int random = 0;
+    for (int j = 0; j < 10; j++)
+    {
+        random = new Random().Next(1, 100);
+        Console.WriteLine($"{random}");
+    }
+
+    Console.WriteLine($"Fini");
+    Console.ReadKey();
+}
+
+
+
+
