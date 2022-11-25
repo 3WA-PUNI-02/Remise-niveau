@@ -1,10 +1,4 @@
 ﻿
-Loto();
-
-
-
-
-
 // ========== ========== ========== ========== ==========
 void TVA()
 {
@@ -80,33 +74,24 @@ void Calculator2000()
     int a = 0;
     int b = 0;
 
-    int choice = 1;
-
-    while(choice != 1 && choice != 2)
+    int choice = 0;
+    while (choice != 1 && choice != 2)
     {
         Console.WriteLine("Menu");
         Console.WriteLine("1 Facile");
         Console.WriteLine("2 Difficile");
-        choice = int.Parse(Console.ReadLine());
-        if(choice == 1)
+        //choice = ReadNumber();
+        if (choice == 1)
         {
             a = new Random().Next(1, 100);
             b = new Random().Next(1, 100);
         }
-        else if(choice == 2)
+        else if (choice == 2)
         {
             a = new Random().Next(1, 10000);
             b = new Random().Next(1, 10000);
         }
     }
-
-    do
-    {
-
-        Console.WriteLine("");
-
-    } while(choice == 1);
-
 
     #region Game
     Console.WriteLine($"Combien fait {a} + {b} ?");
@@ -123,8 +108,6 @@ void Calculator2000()
     Console.ReadKey();
     #endregion
 
-
-
 }
 // ========== ========== ========== ========== ==========
 void PlusOuMoins()
@@ -138,11 +121,11 @@ void PlusOuMoins()
         Console.WriteLine("Devine :");
         choixJoueur = int.Parse(Console.ReadLine());
 
-        if(choixJoueur < nbMystere)
+        if (choixJoueur < nbMystere)
         {
             Console.WriteLine("C'est plus");
         }
-        else if(choixJoueur > nbMystere)
+        else if (choixJoueur > nbMystere)
         {
             Console.WriteLine("C'est moins");
         }
@@ -152,7 +135,88 @@ void PlusOuMoins()
     Console.WriteLine("GG");
     Console.ReadKey();
 }
-// ========== ========== ========== ========== ==========
+void PlusOuMoinsFtList()
+{
+    List<int> historique = new List<int>();
+    var nbMystere = new Random().Next(1, 100);
+    int choixJoueur = 0;
+    Console.WriteLine($"Plus ou moins (cheat:{nbMystere}");
+
+    do
+    {
+        Console.WriteLine("Devine :");
+        choixJoueur = ReadNumer();
+        historique.Add(choixJoueur);
+
+        if (choixJoueur < nbMystere)
+        {
+            Console.WriteLine("C'est plus");
+        }
+        else if (choixJoueur > nbMystere)
+        {
+            Console.WriteLine("C'est moins");
+        }
+
+    } while (choixJoueur != nbMystere);
+
+    Console.WriteLine($"GG tu as fais ça en {historique.Count} coup ! voici ton historique :");
+
+    for (int i = 0; i < historique.Count; i++)
+    {
+        Console.Write(historique[i] + " ");
+    }
+
+    Console.ReadKey();
+}
+void PlusOuMoinsFtListV2()
+{
+    bool tryAgain = true;
+    List<int> historique = new List<int>();
+
+    do
+    {
+        var nbMystere = new Random().Next(1, 100);
+        int choixJoueur = 0;
+        Console.WriteLine($"Plus ou moins (cheat:{nbMystere}");
+
+        do
+        {
+            Console.WriteLine("Devine :");
+            choixJoueur = ReadNumer();
+            historique.Add(choixJoueur);
+
+            if (choixJoueur < nbMystere)
+            {
+                Console.WriteLine("C'est plus");
+            }
+            else if (choixJoueur > nbMystere)
+            {
+                Console.WriteLine("C'est moins");
+            }
+
+        } while (choixJoueur != nbMystere);
+
+        Console.WriteLine($"GG tu as fais ça en {historique.Count} coup ! voici ton historique :");
+
+        for (int i = 0; i < historique.Count; i++)
+        {
+            Console.Write(historique[i] + " ");
+        }
+
+        Console.WriteLine("Try again ? 1 - OUI / 2 - NON");
+        if (ReadNumer() == 2)
+        {
+            tryAgain = false;
+        }
+        else
+        {
+            historique.Clear();
+        }
+
+    } while (tryAgain);
+
+    //Console.ReadKey();
+}
 void PlusOuMoinsV2()
 {
     var nbMystere = new Random().Next(1, 100);
@@ -165,7 +229,7 @@ void PlusOuMoinsV2()
     {
         nbTentative++;
         Console.WriteLine("Devine :");
-        if(int.TryParse(Console.ReadLine(), out choixJoueur))
+        if (int.TryParse(Console.ReadLine(), out choixJoueur))
         {
             if (choixJoueur < nbMystere)
             {
@@ -180,6 +244,7 @@ void PlusOuMoinsV2()
         {
             Console.WriteLine("écrit un nombre stp");
         }
+
     } while (choixJoueur != nbMystere);
 
 
@@ -196,12 +261,230 @@ void Loto()
     {
         random = new Random().Next(1, 100);
         Console.WriteLine($"{random}");
+
+        IsEven(random);
+
     }
 
     Console.WriteLine($"Fini");
     Console.ReadKey();
 }
+// ========== ========== ========== ========== ==========
+
+void IsEven(int number)
+{
+    if (number % 2 == 0)
+    {
+        Console.WriteLine("Oh c'est paire");
+    }
+}
+int Power2(int number)
+{
+    var el = number * number;
+    return el;
+}
+// ========== ========== ========== ========== ==========
+
+int ReadNumer()
+{
+    bool flag = false;
+    while (flag == false)
+    {
+        string txt = Console.ReadLine();
+        if (int.TryParse(txt, out int result))
+        {
+            return result;
+        }
+        else
+        {
+            Console.WriteLine("Erreur, entrez un nombre");
+        }
+    }
+    return -1;
+}
+void LotoWithList()
+{
+    List<int> loto = new List<int>();
+
+    for (int i = 0; i < 10; i++)
+    {
+        var r = new Random().Next(1, 100);
+        loto.Add(r);
+    }
+
+    foreach (int el in loto)
+    {
+        Console.WriteLine(el);
+    }
+
+    Console.WriteLine("fini");
+    Console.ReadKey();
+}
 
 
 
+
+DisplaySecretWord("hello", "eo");       // _ e _ _ o
+DisplaySecretWord("hello", "eohl");       // _ e _ _ o
+DisplaySecretWord("", "eo");       // _ e _ _ o
+DisplaySecretWord("hello", "");       // _ e _ _ o
+Console.ReadKey();
+
+// Écrit dans la console le mot secret uniquement avec les lettres qui sont déjà dévoilées
+void DisplaySecretWord(string secretWord, string displayedCharacter)
+{
+    // on parcourt toutes les lettres du secretWord
+    for (int i = 0; i < secretWord.Length; i++)
+    {
+        // secretWord[i]
+        // si le caractère en question existe dans displayedCharacter
+        if (displayedCharacter.Contains(secretWord[i]))
+        {
+            // ON affiche le caractère
+            Console.Write(secretWord[i]);
+        }
+        // sinon 
+        else
+        {
+            // ON affiche _
+            Console.Write("_");
+        }
+    }
+
+    //foreach (char c in secretWord)
+    //{
+    //    // si le caractère en question existe dans displayedCharacter
+    //    if (displayedCharacter.Contains(c))
+    //    {
+    //        // ON affiche le caractère
+    //        Console.Write(c);
+    //    }
+    //    // sinon 
+    //    else
+    //    {
+    //        // ON affiche _
+    //        Console.Write("_");
+    //    }
+    //}
+}
+
+
+// Read a line until the player gives only 1 character
+string ReadCharacter()
+{
+    string saisie = "";
+    do
+    {
+        // Je demande une saisie au joueur, je la garde d'un côté
+        saisie = Console.ReadLine();
+
+        // Si le joeur a entré un seul caractère, tout est bon on peut renvoyer ce texte
+        if (saisie.Length != 1)
+        {
+            Console.WriteLine("Erreur, un seul caractère autorisé");
+        }
+        // Sinon on affiche un message et on remonte à la première étape
+        
+    } 
+    while (saisie.Length != 1);
+    return saisie;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+string ReadCharacteraaa()
+{
+    bool flag = false;
+    string t = "";
+    while (t.Length != 1)
+    {
+        t = Console.ReadLine();
+        if (t.Length == 1)
+        {
+            flag = true;
+        }
+        else
+        {
+            Console.WriteLine("Erreur");
+        }
+    }
+    return t;
+}
+
+
+//Console.WriteLine("Debut du programme");
+
+////var c = ReadCharacter();
+////Console.WriteLine($"Tu as écris : {c}");
+
+//AfficherMot("hello", "eo");
+
+//string hello = "hello";
+
+//Console.WriteLine("Fin du programme");
+//Console.ReadKey();
+
+
+void AfficherMot(string mot, string known)
+{
+    foreach (var c in mot)
+    {
+        if (known.Contains(c))
+        {
+            Console.Write(c);
+        }
+        else
+        {
+            Console.Write("_");
+        }
+    }
+    Console.WriteLine("");
+
+}
+
+bool MotComplet(string mot, string known)
+{
+    foreach (var c in mot)
+    {
+        if (known.Contains(c) == false) return false;
+    }
+    return true;
+}
+
+
+
+
+
+
+
+void Pendu()
+{
+
+
+
+
+
+}
 
