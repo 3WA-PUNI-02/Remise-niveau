@@ -408,6 +408,19 @@ bool IsWordCompleted(string secretWord, string displayedCharacter)
 
 
 
+// Tant que le mot complet n'a pas été dévoilé
+
+    // On lit un caractère
+
+
+    // On cumule les anciens caractères avec ce nouveau caratère
+
+
+    // On affiche le mot avec ces caractères
+
+
+
+
 
 
 
