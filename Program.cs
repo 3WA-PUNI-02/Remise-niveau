@@ -324,11 +324,11 @@ void LotoWithList()
 
 
 
-DisplaySecretWord("hello", "eo");       // _ e _ _ o
-DisplaySecretWord("hello", "eohl");       // _ e _ _ o
-DisplaySecretWord("", "eo");       // _ e _ _ o
-DisplaySecretWord("hello", "");       // _ e _ _ o
-Console.ReadKey();
+//DisplaySecretWord("hello", "eo");       // _ e _ _ o
+//DisplaySecretWord("hello", "eohl");       // _ e _ _ o
+//DisplaySecretWord("", "eo");       // _ e _ _ o
+//DisplaySecretWord("hello", "");       // _ e _ _ o
+//Console.ReadKey();
 
 // Écrit dans la console le mot secret uniquement avec les lettres qui sont déjà dévoilées
 void DisplaySecretWord(string secretWord, string displayedCharacter)
@@ -336,6 +336,7 @@ void DisplaySecretWord(string secretWord, string displayedCharacter)
     // on parcourt toutes les lettres du secretWord
     for (int i = 0; i < secretWord.Length; i++)
     {
+
         // secretWord[i]
         // si le caractère en question existe dans displayedCharacter
         if (displayedCharacter.Contains(secretWord[i]))
@@ -351,6 +352,7 @@ void DisplaySecretWord(string secretWord, string displayedCharacter)
         }
     }
 
+    #region version foreach
     //foreach (char c in secretWord)
     //{
     //    // si le caractère en question existe dans displayedCharacter
@@ -366,8 +368,8 @@ void DisplaySecretWord(string secretWord, string displayedCharacter)
     //        Console.Write("_");
     //    }
     //}
+    #endregion
 }
-
 
 // Read a line until the player gives only 1 character
 string ReadCharacter()
@@ -385,13 +387,22 @@ string ReadCharacter()
         }
         // Sinon on affiche un message et on remonte à la première étape
         
-    } 
-    while (saisie.Length != 1);
+    } while (saisie.Length != 1);
+
     return saisie;
 }
 
-
-
+bool IsWordCompleted(string secretWord, string displayedCharacter)
+{
+    foreach(var c in secretWord)
+    {
+        if(displayedCharacter.Contains(c) == false)
+        {
+            return false;
+        }
+    }
+    return true;
+}
 
 
 
