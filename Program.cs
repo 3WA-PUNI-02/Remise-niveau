@@ -458,7 +458,7 @@ bool IsWordCompleted(string secretWord, string displayedCharacter)
 Puissance4();
 void Puissance4()
 {
-    int[,] tableau = new int[15,20];
+    int[,] tableau = new int[6,7];
 
     DisplayGrid(tableau);
 
@@ -466,42 +466,105 @@ void Puissance4()
 
     // TANT que la grille n'est pas pleine ET qu'il n'y a pas de puissance4
     // {
+
     while(true)
     {
         // Demander au joueur 1 la colonne 
         Console.WriteLine("Joueur 1");
-        var col = ReadNumber();
-        InsertChip(tableau, col, 1);
+        var col = ReadNumber() - 1;
+        var newLine = InsertChip(tableau, col, 1);
         // Présenter le plateau
         DisplayGrid(tableau);
         // Est-ce que ya un puissance 4 ?
+        var result = HasConnect4(tableau, newLine, col);
+        if(result == true)
+        {
+            break;
+        }
 
         // Demander au joueur 2 la colonne
         Console.WriteLine("Joueur 2");
-        col = ReadNumber();
-        InsertChip(tableau, col, 2);
+        col = ReadNumber() - 1;
+        newLine = InsertChip(tableau, col, 2);
         // Présenter le plateau
         DisplayGrid(tableau);
+        
+        result = HasConnect4(tableau, newLine, col);
+        if (result == true)
+        {
+            break;
+        }
     }
+    Console.WriteLine("Youpi");
     Console.ReadKey();
 
     // }
     // Ecran de victoire
 }
 
-bool InsertChip(int[,] grid, int col, int playerCoin)
+bool HasConnect4(int[,] tableau, int newLine, int col)
+{
+    var chip = tableau[newLine, col];
+
+    // 0 0 X 0 X X 0 0
+    int count = 1;
+    if (col + 1 >= tableau.GetLength(1) && chip == tableau[newLine, col + 1])
+    {
+        count++;
+        if (col + 2 >= tableau.GetLength(1) && chip == tableau[newLine, col + 2])
+        {
+            count++;
+            if (col + 3 >= tableau.GetLength(1) && chip == tableau[newLine, col + 3]) count++;
+        }
+    }
+
+    if (chip == tableau[newLine, col - 1])
+    {
+        count++;
+        if (chip == tableau[newLine, col - 2])
+        {
+            count++;
+            if (chip == tableau[newLine, col - 3]) count++;
+        }
+    }
+
+    if (count >= 4) return true; 
+
+    // droite
+    if (col <= 3 &&
+        chip == tableau[newLine, col + 1] && 
+        chip == tableau[newLine, col + 2] &&
+        chip == tableau[newLine, col + 3])
+    {
+        return true;
+    }
+
+    // gauche
+    if (col >= 3 &&
+        chip == tableau[newLine, col - 1] &&
+        chip == tableau[newLine, col - 2] &&
+        chip == tableau[newLine, col - 3])
+    {
+        return true;
+    }
+
+    return false;
+}
+
+int InsertChip(int[,] grid, int col, int playerCoin)
 {
     for (int i = grid.GetLength(0)-1; i >= 0; i--)
     {
-        Console.WriteLine($"reading line {i} : {grid[i, col]}");
+        //Console.WriteLine($"reading line {i} : {grid[i, col]}");
 
+        
         if(grid[i, col] == 0)
         {
             grid[i, col] = playerCoin;
-            return true;
+            return i;
         }
     }
-    return false;
+    return -1;
 }
 
 void DisplayGrid(int[,] tableau)
