@@ -1,4 +1,5 @@
 ﻿
+#region Bases
 // ========== ========== ========== ========== ==========
 void TVA()
 {
@@ -46,6 +47,7 @@ void ChiFouMi()
     {
         Console.WriteLine("Trop fort pour moi");
     }
+
 
     if (reponse == "1" && randomChoice == 3)
     {
@@ -253,38 +255,6 @@ void PlusOuMoinsV2()
     Console.WriteLine($"GG tu as réussis en {nbTentative} fois et en {elapsed.ToString("F2")} secondes chrono!");
     Console.ReadKey();
 }
-// ========== ========== ========== ========== ==========
-void Loto()
-{
-    int random = 0;
-    for (int j = 0; j < 10; j++)
-    {
-        random = new Random().Next(1, 100);
-        Console.WriteLine($"{random}");
-
-        IsEven(random);
-
-    }
-
-    Console.WriteLine($"Fini");
-    Console.ReadKey();
-}
-// ========== ========== ========== ========== ==========
-
-void IsEven(int number)
-{
-    if (number % 2 == 0)
-    {
-        Console.WriteLine("Oh c'est paire");
-    }
-}
-int Power2(int number)
-{
-    var el = number * number;
-    return el;
-}
-// ========== ========== ========== ========== ==========
-
 int ReadNumer()
 {
     bool flag = false;
@@ -302,6 +272,24 @@ int ReadNumer()
     }
     return -1;
 }
+#endregion
+// ========== ========== ========== ========== ==========
+#region Loto
+void Loto()
+{
+    int random = 0;
+    for (int j = 0; j < 10; j++)
+    {
+        random = new Random().Next(1, 100);
+        Console.WriteLine($"{random}");
+
+        IsEven(random);
+
+    }
+
+    Console.WriteLine($"Fini");
+    Console.ReadKey();
+}
 void LotoWithList()
 {
     List<int> loto = new List<int>();
@@ -312,6 +300,11 @@ void LotoWithList()
         loto.Add(r);
     }
 
+    for (int i = 0; i < loto.Count; i++)
+    {
+        Console.WriteLine(loto[i]);
+    }
+
     foreach (int el in loto)
     {
         Console.WriteLine(el);
@@ -320,15 +313,69 @@ void LotoWithList()
     Console.WriteLine("fini");
     Console.ReadKey();
 }
+#endregion
+// ========== ========== ========== ========== ==========
+#region Maths
+void IsEven(int number)
+{
+    if (number % 2 == 0)
+    {
+        Console.WriteLine("Oh c'est paire");
+    }
+}
+int Power2(int number)
+{
+    var el = number * number;
+    return el;
+}
+#endregion
+// ========== ========== ========== ========== ==========
 
+#region Pendu
 
+Pendu();
 
+bool Not(bool input) => !input;
+bool Even(int chiffre) => chiffre % 2 == 0;
 
-//DisplaySecretWord("hello", "eo");       // _ e _ _ o
-//DisplaySecretWord("hello", "eohl");       // _ e _ _ o
-//DisplaySecretWord("", "eo");       // _ e _ _ o
-//DisplaySecretWord("hello", "");       // _ e _ _ o
-//Console.ReadKey();
+void Pendu()
+{
+    List<string> dictionnary = new List<string>()
+    {
+        "hello",
+        "coucou",
+        "pomme",
+        "poire",
+        "orange",
+        "paillette",
+        "yeux",
+        "kevin",
+        "calculs",
+    };
+
+    int randomIndex = new Random().Next(0, dictionnary.Count);
+    string secret = dictionnary[randomIndex];
+    string displayedCharacters = "";
+
+    DisplaySecretWord(secret, displayedCharacters);
+
+    // Tant que le mot complet n'a pas été dévoilé
+    while (IsWordCompleted(secret, displayedCharacters) == false)
+    {
+        // On lit un caractère
+        var character = ReadCharacter();
+
+        // On cumule les anciens caractères avec ce nouveau caratère
+        displayedCharacters += character;
+
+        // On affiche le mot avec ces caractères
+        DisplaySecretWord(secret, displayedCharacters);
+        Console.WriteLine();
+    }
+
+    Console.WriteLine("Veuillez appuyer sur une touche pour fermer");
+    Console.ReadKey();
+}
 
 // Écrit dans la console le mot secret uniquement avec les lettres qui sont déjà dévoilées
 void DisplaySecretWord(string secretWord, string displayedCharacter)
@@ -336,7 +383,6 @@ void DisplaySecretWord(string secretWord, string displayedCharacter)
     // on parcourt toutes les lettres du secretWord
     for (int i = 0; i < secretWord.Length; i++)
     {
-
         // secretWord[i]
         // si le caractère en question existe dans displayedCharacter
         if (displayedCharacter.Contains(secretWord[i]))
@@ -386,17 +432,18 @@ string ReadCharacter()
             Console.WriteLine("Erreur, un seul caractère autorisé");
         }
         // Sinon on affiche un message et on remonte à la première étape
-        
+
     } while (saisie.Length != 1);
 
     return saisie;
 }
 
+// Return true if the secret word is displayed with all characters
 bool IsWordCompleted(string secretWord, string displayedCharacter)
 {
-    foreach(var c in secretWord)
+    foreach (var c in secretWord)
     {
-        if(displayedCharacter.Contains(c) == false)
+        if (displayedCharacter.Contains(c) == false)
         {
             return false;
         }
@@ -404,111 +451,45 @@ bool IsWordCompleted(string secretWord, string displayedCharacter)
     return true;
 }
 
+#endregion
 
 
+#region Puissance 4
 
-
-// Tant que le mot complet n'a pas été dévoilé
-
-    // On lit un caractère
-
-
-    // On cumule les anciens caractères avec ce nouveau caratère
-
-
-    // On affiche le mot avec ces caractères
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-string ReadCharacteraaa()
+void Puissance4()
 {
-    bool flag = false;
-    string t = "";
-    while (t.Length != 1)
+
+    int[,] tableau = new int[6,7];
+
+    DisplayGrid(tableau);
+
+    // Présenter le plateau
+
+    // TANT que la grille n'est pas pleine ET qu'il n'y a pas de puissance4
+    // {
+    // Demander au joueur 1 la colonne 
+    // Présenter le plateau
+    // Est-ce que ya un puissance 4 ?
+
+    // Demander au joueur 2 la colonne
+    // Présenter le plateau
+    // }
+    // Ecran de victoire
+
+}
+
+void DisplayGrid(int[,] tableau)
+{
+    for (int x = 0; x < tableau.GetLength(0); x++)
     {
-        t = Console.ReadLine();
-        if (t.Length == 1)
+        for (int y = 0; y < tableau.GetLength(1); y++)
         {
-            flag = true;
+            Console.Write(tableau[x, y] + " ");
         }
-        else
-        {
-            Console.WriteLine("Erreur");
-        }
+        Console.WriteLine();
     }
-    return t;
 }
 
+#endregion
 
-//Console.WriteLine("Debut du programme");
-
-////var c = ReadCharacter();
-////Console.WriteLine($"Tu as écris : {c}");
-
-//AfficherMot("hello", "eo");
-
-//string hello = "hello";
-
-//Console.WriteLine("Fin du programme");
-//Console.ReadKey();
-
-
-void AfficherMot(string mot, string known)
-{
-    foreach (var c in mot)
-    {
-        if (known.Contains(c))
-        {
-            Console.Write(c);
-        }
-        else
-        {
-            Console.Write("_");
-        }
-    }
-    Console.WriteLine("");
-
-}
-
-bool MotComplet(string mot, string known)
-{
-    foreach (var c in mot)
-    {
-        if (known.Contains(c) == false) return false;
-    }
-    return true;
-}
-
-
-
-
-
-
-
-void Pendu()
-{
-
-
-
-
-
-}
 
