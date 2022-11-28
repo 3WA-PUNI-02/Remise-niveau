@@ -147,7 +147,7 @@ void PlusOuMoinsFtList()
     do
     {
         Console.WriteLine("Devine :");
-        choixJoueur = ReadNumer();
+        choixJoueur = ReadNumber();
         historique.Add(choixJoueur);
 
         if (choixJoueur < nbMystere)
@@ -184,7 +184,7 @@ void PlusOuMoinsFtListV2()
         do
         {
             Console.WriteLine("Devine :");
-            choixJoueur = ReadNumer();
+            choixJoueur = ReadNumber();
             historique.Add(choixJoueur);
 
             if (choixJoueur < nbMystere)
@@ -206,7 +206,7 @@ void PlusOuMoinsFtListV2()
         }
 
         Console.WriteLine("Try again ? 1 - OUI / 2 - NON");
-        if (ReadNumer() == 2)
+        if (ReadNumber() == 2)
         {
             tryAgain = false;
         }
@@ -255,7 +255,7 @@ void PlusOuMoinsV2()
     Console.WriteLine($"GG tu as réussis en {nbTentative} fois et en {elapsed.ToString("F2")} secondes chrono!");
     Console.ReadKey();
 }
-int ReadNumer()
+int ReadNumber()
 {
     bool flag = false;
     while (flag == false)
@@ -333,7 +333,7 @@ int Power2(int number)
 
 #region Pendu
 
-Pendu();
+///Pendu();
 
 bool Not(bool input) => !input;
 bool Even(int chiffre) => chiffre % 2 == 0;
@@ -455,11 +455,10 @@ bool IsWordCompleted(string secretWord, string displayedCharacter)
 
 
 #region Puissance 4
-
+Puissance4();
 void Puissance4()
 {
-
-    int[,] tableau = new int[6,7];
+    int[,] tableau = new int[15,20];
 
     DisplayGrid(tableau);
 
@@ -467,15 +466,42 @@ void Puissance4()
 
     // TANT que la grille n'est pas pleine ET qu'il n'y a pas de puissance4
     // {
-    // Demander au joueur 1 la colonne 
-    // Présenter le plateau
-    // Est-ce que ya un puissance 4 ?
+    while(true)
+    {
+        // Demander au joueur 1 la colonne 
+        Console.WriteLine("Joueur 1");
+        var col = ReadNumber();
+        InsertChip(tableau, col, 1);
+        // Présenter le plateau
+        DisplayGrid(tableau);
+        // Est-ce que ya un puissance 4 ?
 
-    // Demander au joueur 2 la colonne
-    // Présenter le plateau
+        // Demander au joueur 2 la colonne
+        Console.WriteLine("Joueur 2");
+        col = ReadNumber();
+        InsertChip(tableau, col, 2);
+        // Présenter le plateau
+        DisplayGrid(tableau);
+    }
+    Console.ReadKey();
+
     // }
     // Ecran de victoire
+}
 
+bool InsertChip(int[,] grid, int col, int playerCoin)
+{
+    for (int i = grid.GetLength(0)-1; i >= 0; i--)
+    {
+        Console.WriteLine($"reading line {i} : {grid[i, col]}");
+
+        if(grid[i, col] == 0)
+        {
+            grid[i, col] = playerCoin;
+            return true;
+        }
+    }
+    return false;
 }
 
 void DisplayGrid(int[,] tableau)
