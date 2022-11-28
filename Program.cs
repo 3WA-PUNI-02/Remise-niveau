@@ -466,7 +466,7 @@ void Puissance4()
 
     // TANT que la grille n'est pas pleine ET qu'il n'y a pas de puissance4
     // {
-
+    bool result = false;
     while(true)
     {
         // Demander au joueur 1 la colonne 
@@ -476,7 +476,8 @@ void Puissance4()
         // Présenter le plateau
         DisplayGrid(tableau);
         // Est-ce que ya un puissance 4 ?
-        var result = HasConnect4(tableau, newLine, col);
+        //result = HasConnect4(tableau, newLine, col);
+        result = HasConnect4Func(tableau, (newLine, col));
         if(result == true)
         {
             break;
@@ -489,7 +490,8 @@ void Puissance4()
         // Présenter le plateau
         DisplayGrid(tableau);
         
-        result = HasConnect4(tableau, newLine, col);
+        //result = HasConnect4(tableau, newLine, col);
+        result = HasConnect4Func(tableau, (newLine, col));
         if (result == true)
         {
             break;
@@ -501,6 +503,42 @@ void Puissance4()
     // }
     // Ecran de victoire
 }
+
+(int dx, int dy)[] Neighboors() 
+    => new[] { (1,0), (0,1), (1,1), (-1,1) };
+
+bool HasConnect4Func(int[,] tab, (int x, int y) pos) 
+    => Neighboors().Select(i => CountChipsFrom(tab, pos, i)).Max() >= 4;
+
+int CountChipsFrom(int[,] tab, (int x,int y) pos, (int x,int y) dir)
+{
+    var chip = tab[pos.x, pos.y];
+    return Count(dir) + Count((-dir.x, -dir.y)) - 1;
+
+    bool IsOutOfBounds((int x, int y) pos)
+        => pos.x < 0 ||
+            pos.y < 0 ||
+            pos.x >= tab.GetLength(0) ||
+            pos.y >= tab.GetLength(1);
+
+    int Count((int x,int y) dir)
+    {
+        (int x,int y) cursor = (pos.Item1, pos.Item2);
+        int c = 0;
+        while (tab[cursor.x, cursor.y] == chip)
+        {
+            c ++;
+            cursor = (cursor.x + dir.x, cursor.y + dir.y);
+            if (IsOutOfBounds(cursor)) break;
+        }
+        return c;
+    }
+}
+
+
+
+
+
 
 bool HasConnect4(int[,] tableau, int newLine, int col)
 {
