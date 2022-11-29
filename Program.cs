@@ -1,4 +1,6 @@
 ﻿
+
+
 #region Bases
 // ========== ========== ========== ========== ==========
 void TVA()
@@ -476,8 +478,8 @@ void Puissance4()
         // Présenter le plateau
         DisplayGrid(tableau);
         // Est-ce que ya un puissance 4 ?
-        //result = HasConnect4(tableau, newLine, col);
-        result = HasConnect4Func(tableau, (newLine, col));
+        result = HasConnect4(tableau, newLine, col);
+        //result = HasConnect4Func(tableau, (newLine, col));
         if(result == true)
         {
             break;
@@ -504,6 +506,7 @@ void Puissance4()
     // Ecran de victoire
 }
 
+#region Advanced
 (int dx, int dy)[] Neighboors() 
     => new[] { (1,0), (0,1), (1,1), (-1,1) };
 
@@ -534,58 +537,49 @@ int CountChipsFrom(int[,] tab, (int x,int y) pos, (int x,int y) dir)
         return c;
     }
 }
+#endregion
 
-
-
-
-
-
-bool HasConnect4(int[,] tableau, int newLine, int col)
+bool IsOutOfBound(int[,] tab, int x, int y)
 {
-    var chip = tableau[newLine, col];
+    if(x < 0 || y < 0) return true;
+    if (x >= tab.GetLength(0)) return true;
+    if (y >= tab.GetLength(1)) return true;
 
-    // 0 0 X 0 X X 0 0
-    int count = 1;
-    if (col + 1 >= tableau.GetLength(1) && chip == tableau[newLine, col + 1])
+    return false;
+}
+
+int CountForDirection(int[,] tableau, int x, int y, int dx, int dy)
+{
+    var chip = tableau[x, y];
+    int counter = 0;
+    int cursorX = x;
+    int cursorY = y;
+    while (tableau[cursorX, cursorY] == chip)
     {
-        count++;
-        if (col + 2 >= tableau.GetLength(1) && chip == tableau[newLine, col + 2])
-        {
-            count++;
-            if (col + 3 >= tableau.GetLength(1) && chip == tableau[newLine, col + 3]) count++;
-        }
+        counter++;
+        cursorX += dx;
+        cursorY += dy;
+        if (IsOutOfBound(tableau, cursorX, cursorY) == true) break;
     }
-
-    if (chip == tableau[newLine, col - 1])
+    cursorX = x;
+    cursorY = y;
+    while (tableau[cursorX, cursorY] == chip)
     {
-        count++;
-        if (chip == tableau[newLine, col - 2])
-        {
-            count++;
-            if (chip == tableau[newLine, col - 3]) count++;
-        }
+        counter++;
+        cursorX -= dx;
+        cursorY -= dy;
+        if (IsOutOfBound(tableau, cursorX, cursorY) == true) break;
     }
+    counter--;
+    return counter;
+}
 
-    if (count >= 4) return true; 
-
-    // droite
-    if (col <= 3 &&
-        chip == tableau[newLine, col + 1] && 
-        chip == tableau[newLine, col + 2] &&
-        chip == tableau[newLine, col + 3])
-    {
-        return true;
-    }
-
-    // gauche
-    if (col >= 3 &&
-        chip == tableau[newLine, col - 1] &&
-        chip == tableau[newLine, col - 2] &&
-        chip == tableau[newLine, col - 3])
-    {
-        return true;
-    }
-
+bool HasConnect4(int[,] tableau, int x, int y)
+{
+    if (CountForDirection(tableau, x, y, 1, 0) >= 4) return true;
+    if (CountForDirection(tableau, x, y, 0, 1) >= 4) return true;
+    if (CountForDirection(tableau, x, y, 1, 1) >= 4) return true;
+    if (CountForDirection(tableau, x, y, -1, 1) >= 4) return true;
     return false;
 }
 
@@ -594,8 +588,6 @@ int InsertChip(int[,] grid, int col, int playerCoin)
     for (int i = grid.GetLength(0)-1; i >= 0; i--)
     {
         //Console.WriteLine($"reading line {i} : {grid[i, col]}");
-
-        
         if(grid[i, col] == 0)
         {
             grid[i, col] = playerCoin;
