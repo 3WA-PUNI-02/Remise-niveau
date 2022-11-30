@@ -1,45 +1,25 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace RedStudio.SuperRPGOTD
+namespace HelloWorld
 {
-    public class HealthBar_EXAMPLE
+    public class HealthBar
     {
-        // Champs / Field
-        int _hp;
-        int _maxHp;
-        string _name;
-
-        // Propriétés / Property
-        public int HP { get => _hp; }
-        public int MaxHp { get => _maxHp; }
-        public string Name { get; private set; }
-
-        // Methode / Method
-        void Damage(int amount)
+        public HealthBar(int hp)
         {
-            Name = "coucou";
-            _hp -= amount;
+            HP = hp;
+
         }
-        public void Regen(int amount)
+
+        public int HP { get; set; }
+
+        public void Damage(int v)
         {
-            
+            if (v < 0) throw new ArgumentException();
+            HP -= v;
         }
     }
-
-    public class Player
-    {
-        HealthBar healthBar;
-
-        void Main()
-        {
-            healthBar = new HealthBar();
-
-            //_hb._hp = -12;
-
-            Console.WriteLine(healthBar.HP);
-
-            //healthBar.HP = 12;
-        }
-    }
-
 }
