@@ -8,7 +8,7 @@ public class HealthTests
     [Test]
     public void HealthMustBeStruct()
     {
-        Assert.IsTrue(typeof(Health).IsClass == false);
+        Assert.IsTrue(typeof(Health).IsClass == true);
     }
 
     #region Constructor
