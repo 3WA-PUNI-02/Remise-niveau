@@ -1,6 +1,8 @@
 ﻿
 
 
+
+
 #region Bases
 // ========== ========== ========== ========== ==========
 void TVA()
@@ -455,7 +457,6 @@ bool IsWordCompleted(string secretWord, string displayedCharacter)
 
 #endregion
 
-
 #region Puissance 4
 Puissance4();
 void Puissance4()
@@ -610,5 +611,11 @@ void DisplayGrid(int[,] tableau)
 }
 
 #endregion
+
+
+
+
+
+
 
 
