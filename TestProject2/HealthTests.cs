@@ -6,18 +6,13 @@ using NUnit.Framework;
 
 public class HealthTests
 {
-    [Test]
-    public void HealthMustBeStruct()
-    {
-        Assert.IsTrue(typeof(Health).IsClass == true);
-    }
-
     #region Constructor
     [Test]
     public void CreateHealthWithMaxAndCurrent()
     {
         int maxHealth = 100;
         int health = 10;
+
         Health h = new Health(maxHealth, health);
 
         Assert.AreEqual(h.MaxHealth, maxHealth);
@@ -41,7 +36,6 @@ public class HealthTests
         {
             Health h = new Health(100, 200);
         });
-
     }
 
     [Test]
@@ -169,7 +163,7 @@ public class HealthTests
         Health h = new Health(100, 60);
 
         h.TakeDamage(10);
-        Assert.AreEqual(50, h.CurrentHealth);
+        Assert.AreEqual(50,h.CurrentHealth);
 
         h.Heal(20);
         Assert.AreEqual(70, h.CurrentHealth);
