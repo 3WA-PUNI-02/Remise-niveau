@@ -13,7 +13,7 @@ namespace TestProject2
         [Test]
         public void HealthBarWorks()
         {
-            HealthBar hb = new HealthBar(100);
+            Health hb = new Health(100);
             hb.Damage(10);
             Assert.IsTrue(hb.HP == 90);
         }
@@ -21,14 +21,14 @@ namespace TestProject2
         [Test]
         public void HealthBarWorks2()
         {
-            HealthBar hb = new HealthBar(100);
+            Health hb = new Health(100);
             Assert.Throws<ArgumentException>( () => { hb.Damage(-10); } );
         }
 
         [Test]
         public void HealthBarWorks3()
         {
-            HealthBar hb = new HealthBar(100);
+            Health hb = new Health(100);
             hb.Damage(0);
             Assert.IsTrue(hb.HP == 100);
         }
