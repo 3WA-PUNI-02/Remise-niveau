@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HelloWorld
 {
+
     public class Health
     {
-        // Constructeur
         public Health(int maxHealth)
         {
             if (maxHealth <= 0)
@@ -35,10 +35,8 @@ namespace HelloWorld
             CurrentHealth = health;
         }
 
-        // Champs
         int _maxHealth;
 
-        // Propriété
         public int MaxHealth        // Première manière d'écrire une propriété
         {
             get
@@ -49,7 +47,6 @@ namespace HelloWorld
         public int CurrentHealth { get; private set; }
         public bool IsDead { get; private set; }
 
-        // Methodes
         public void TakeDamage(int amount)
         {
             if(amount < 0)
@@ -80,8 +77,9 @@ namespace HelloWorld
             {
                 IsDead = false;
             }
-
         }
-
+    
+    
+    
     }
 }

@@ -184,4 +184,20 @@ public class HealthTests
     }
     #endregion
 
+    [Test]
+    public void MultipleHealthBar()
+    {
+        Health hb1 = new Health(200, 100);
+
+        Health hb2 = new Health(1000);
+
+        hb1.TakeDamage(50);
+        hb2.TakeDamage(100);
+
+        //Health.Name = "HelloWorld";
+        //hb1.IsDead = false;
+
+        Console.WriteLine();
+    }
+
 }

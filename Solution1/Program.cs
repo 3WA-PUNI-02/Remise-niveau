@@ -4,7 +4,6 @@ class Programm
 {
     static void Main(string[] args)
     {
-
         Console.WriteLine("Bingo!");
         Console.ReadKey();
 
