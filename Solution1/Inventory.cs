@@ -53,12 +53,12 @@ namespace HelloWorld
 
         public void UseItem()
         {
-
+            RemoveItem();
         }
 
         public void SellItem()
         {
-
+            RemoveItem();
         }
     }
 }
