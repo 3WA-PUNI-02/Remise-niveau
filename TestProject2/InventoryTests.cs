@@ -112,6 +112,104 @@ namespace TestProject2
         }
 
 
+        [Test]
+        public void InventoryRemove1Item()
+        {
+            Inventory inventory = new Inventory();
+
+            inventory.AddItem("Potion");
+            Assert.IsTrue(inventory.Bag.Count == 1);
+
+            inventory.RemoveItem("Potion");
+            Assert.IsTrue(inventory.Bag.Count == 0);
+        }
+
+        [Test]
+        public void InventoryRemoveUnexistantItem()
+        {
+            Inventory inventory = new Inventory();
+
+            inventory.AddItem("Potion");
+            Assert.IsTrue(inventory.Bag.Count == 1);
+
+            Assert.Throws<ArgumentException>(() =>
+                inventory.RemoveItem("Epee")
+            );
+        }
+
+        [Test]
+        public void InventoryAdd3Remove4Item()
+        {
+            Inventory inventory = new Inventory();
+
+            inventory.AddItem("Potion", 3);
+            Assert.IsTrue(inventory.Bag.Count == 3);
+
+            inventory.RemoveItem("Potion");
+            Assert.IsTrue(inventory.Bag.Count == 2);
+            inventory.RemoveItem("Potion");
+            Assert.IsTrue(inventory.Bag.Count == 1);
+            inventory.RemoveItem("Potion");
+            Assert.IsTrue(inventory.Bag.Count == 0);
+
+            Assert.Throws<ArgumentException>(() =>
+                inventory.RemoveItem("Potion")
+            );
+        }
+
+        [Test]
+        public void InventoryAddBatchAndRemoveBatch()
+        {
+            Inventory inventory = new Inventory();
+
+            inventory.AddItem("Potion", 3);
+            Assert.IsTrue(inventory.Bag.Count == 3);
+
+            inventory.RemoveItem("Potion", 3);
+            Assert.IsTrue(inventory.Bag.Count == 0);
+        }
+
+        [Test]
+        public void InventoryAddBatchAndRemoveTooMuch()
+        {
+            Inventory inventory = new Inventory();
+
+            inventory.AddItem("Potion", 3);
+            Assert.IsTrue(inventory.Bag.Count == 3);
+
+            Assert.Throws<ArgumentException>(() =>
+                inventory.RemoveItem("Potion", 5)
+            );
+        }
+
+        [Test]
+        public void InventoryRemoveNegativItem()
+        {
+            Inventory inventory = new Inventory();
+
+            inventory.AddItem("Potion", 3);
+            Assert.IsTrue(inventory.Bag.Count == 3);
+
+            Assert.Throws<ArgumentException>(() =>
+                inventory.RemoveItem("Potion", -5)
+            );
+        }
+
+        [Test]
+        public void InventoryRemoveZeroItem()
+        {
+            Inventory inventory = new Inventory();
+
+            inventory.AddItem("Potion", 3);
+            Assert.IsTrue(inventory.Bag.Count == 3);
+
+            Assert.Throws<ArgumentException>(() =>
+                inventory.RemoveItem("Potion", 0)
+            );
+        }
+
+
+
 
 
 

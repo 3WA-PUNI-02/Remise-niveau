@@ -46,19 +46,40 @@ namespace HelloWorld
             }
         }
 
-        public void RemoveItem()
+        public void RemoveItem(string itemToRemove)
         {
+            //if (!_bag.Contains(itemToRemove))
+            if (_bag.Contains(itemToRemove) == false)
+            {
+                throw new ArgumentException();
+            }
 
+           _bag.Remove(itemToRemove);
         }
+
+        public void RemoveItem(string itemToRemove, int qt)
+        {
+            if(qt <= 0 )
+            {
+                throw new ArgumentException();
+            }
+
+            for (int i = 0; i < qt; i++)
+            {
+                RemoveItem(itemToRemove);
+            }
+        }
+
+
 
         public void UseItem()
         {
-            RemoveItem();
+            //RemoveItem();
         }
 
         public void SellItem()
         {
-            RemoveItem();
+            //RemoveItem();
         }
     }
 }
