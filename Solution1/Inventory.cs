@@ -11,9 +11,10 @@ namespace HelloWorld
     /// </summary>
     public class Inventory
     {
-        List<string> _bag;
+        List<BasicItem> _bag;
+        Player _player;
 
-        public List<string> Bag
+        public List<BasicItem> Bag
         {
             get { return _bag; }
             private set { _bag = value; }
@@ -21,19 +22,25 @@ namespace HelloWorld
 
         public Inventory()
         {
-            _bag = new List<string>();
+            _bag = new List<BasicItem>();
         }
 
-        public void AddItem(string newItem)
+        public Inventory(Player master)
         {
-            if (string.IsNullOrEmpty(newItem))
+            _bag = new List<string>();
+            _player = master;
+        }
+
+        public void AddItem(BasicItem newItem)
+        {
+            if (newItem == null)
             {
                 throw new ArgumentException();
             }
 
             Bag.Add(newItem);
         }
-        public void AddItem(string newItem, int unit)
+        public void AddItem(BasicItem newItem, int unit)
         {
             if(unit <= 0 || unit >= 100)
             {
@@ -46,7 +53,7 @@ namespace HelloWorld
             }
         }
 
-        public void RemoveItem(string itemToRemove)
+        public void RemoveItem(BasicItem itemToRemove)
         {
             //if (!_bag.Contains(itemToRemove))
             if (_bag.Contains(itemToRemove) == false)
@@ -57,7 +64,7 @@ namespace HelloWorld
            _bag.Remove(itemToRemove);
         }
 
-        public void RemoveItem(string itemToRemove, int qt)
+        public void RemoveItem(BasicItem itemToRemove, int qt)
         {
             if(qt <= 0 )
             {
@@ -70,11 +77,19 @@ namespace HelloWorld
             }
         }
 
-
-
-        public void UseItem()
+        public void UseItem(BasicItem itemName)
         {
-            //RemoveItem();
+            if (_bag.Contains(itemName) == false) return;
+
+            itemName.UseItem();
+
+
+            //if(itemName)
+            //{
+            //    _player.HealthBar.Heal(100);
+            //}
+
+            RemoveItem(itemName);
         }
 
         public void SellItem()

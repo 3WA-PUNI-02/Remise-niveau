@@ -37,15 +37,12 @@ namespace HelloWorld
 
         int _maxHealth;
 
-        public int MaxHealth        // Première manière d'écrire une propriété
-        {
-            get
-            {
-                return _maxHealth;
-            }
-        }
+        public int MaxHealth => _maxHealth;       // Première manière d'écrire une propriété
         public int CurrentHealth { get; private set; }
         public bool IsDead { get; private set; }
+
+        public event Action OnDie;
+        public event Action<int> OnHealthUpdate;
 
         public void TakeDamage(int amount)
         {
@@ -55,11 +52,19 @@ namespace HelloWorld
             }
 
             CurrentHealth = CurrentHealth - amount;
+            OnHealthUpdate?.Invoke(CurrentHealth);
 
-            if(CurrentHealth < 0)
+            if (CurrentHealth < 0)
             {
                 CurrentHealth = 0;
                 IsDead = true;
+                OnDie?.Invoke();
+
+                // Alternative
+                //if(OnDie != null)
+                //{
+                //    OnDie.Invoke();
+                //}
             }
 
         }
@@ -78,8 +83,6 @@ namespace HelloWorld
                 IsDead = false;
             }
         }
-    
-    
     
     }
 }
