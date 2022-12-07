@@ -8,15 +8,22 @@ namespace HelloWorld
 {
     public class BasicItem
     {
-        public int _buyCost;
-        private int _sellCost;
-        private int _name;
+        protected int _buyCost;
+        protected int _sellCost;
+        protected int _name;
 
-        public virtual void UseItem()
-        {
-
+        public int SellCost 
+        { 
+            get => _sellCost; 
+            protected set => _sellCost = value; 
         }
 
+        public virtual void UseItem(Player p)
+        {
+
+            Console.WriteLine("On utilise un objet");
+
+        }
 
     }
 

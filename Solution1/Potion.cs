@@ -8,14 +8,21 @@ namespace HelloWorld
 {
     public class Potion : BasicItem
     {
+        int _regenAmount;
 
-        public override void UseItem()
+        public Potion(int regenAmount)
         {
-            base.UseItem();
-
-
+            _regenAmount = regenAmount;
         }
 
+        public override void UseItem(Player player)
+        {
+            base.UseItem(player);
 
+            player.HealthBar.Heal(_regenAmount);
+        
+        }
     }
+
+
 }

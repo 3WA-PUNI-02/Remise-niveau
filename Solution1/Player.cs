@@ -18,17 +18,21 @@ namespace HelloWorld
             private set => _healthBar=value; }
         public Inventory Inventory { get => _inventory; private set => _inventory = value; }
 
-        public Player()
+        public Player(int initialLife)
         {
             Name = "|)4||2< >.< _Kev1 du 77__ :3";
 
-            HealthBar = new Health(100);
+            HealthBar = new Health(initialLife);
             Inventory = new Inventory(this);
 
             HealthBar.OnDie += ReactToDie;
+            //HealthBar.OnHealthUpdate += HealthBar_OnHealthUpdate;
+            
+        }
 
-            //_healthBar.OnDie -= ReactToDie;
-
+        private void HealthBar_OnHealthUpdate(int obj)
+        {
+            throw new NotImplementedException();
         }
 
         private void ReactToDie()

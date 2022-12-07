@@ -27,7 +27,7 @@ namespace HelloWorld
 
         public Inventory(Player master)
         {
-            _bag = new List<string>();
+            _bag = new List<BasicItem>();
             _player = master;
         }
 
@@ -77,12 +77,11 @@ namespace HelloWorld
             }
         }
 
-        public void UseItem(BasicItem itemName)
+        public void UseItemFromInventory(BasicItem itemName)
         {
             if (_bag.Contains(itemName) == false) return;
 
-            itemName.UseItem();
-
+            itemName.UseItem(_player);
 
             //if(itemName)
             //{

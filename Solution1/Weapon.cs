@@ -9,9 +9,9 @@ namespace HelloWorld
     public class Weapon : BasicItem
     {
 
-        public override void UseItem()
+        public override void UseItem(Player p)
         {
-            base.UseItem();
+            base.UseItem(p);
 
 
 
